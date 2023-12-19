@@ -1,16 +1,18 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DivisionController;
-use App\Http\Controllers\EmployeeCertController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeStatusController;
-use App\Http\Controllers\PositionController;
-use App\Http\Controllers\ResearchCategoryController;
-use App\Http\Controllers\ResearchController;
-use App\Http\Controllers\UserController;
 use App\Models\Division;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ResearchController;
+use App\Http\Controllers\DataAnggaranController;
+use App\Http\Controllers\EmployeeCertController;
+use App\Http\Controllers\EmployeeStatusController;
+use App\Http\Controllers\KelompokAnggaranController;
+use App\Http\Controllers\ResearchCategoryController;
 
 // use PHPUnit\Event\Test\AfterTestMethodFinished;
 
@@ -103,3 +105,17 @@ Route::group(['prefix' => 'research', 'middleware' => 'auth:api'], function ($ro
     });
 
 });
+Route::group(['prefix' => 'Kelompok'], function ($router) {
+    Route::get('/get',[KelompokAnggaranController::class, 'index']);
+    Route::post('/post', [KelompokAnggaranController::class, 'store']);
+    Route::put('/put/{id}', [KelompokAnggaranController::class, 'update']);
+    Route::delete('/del/{id}', [KelompokAnggaranController::class, 'destroy']);
+}); 
+
+Route::group(['prefix' => 'Data'], function ($router) {
+    Route::get('/data/{id}',[DataAnggaranController::class, 'index']);
+    Route::get('/show/{id}',[DataAnggaranController::class, 'showByKelompokAnggaran']); 
+    Route::post('/post', [DataAnggaranController::class, 'store']);
+    Route::put('/upt/{id}', [DataAnggaranController::class, 'update']);
+    Route::delete('/del/{id}', [DataAnggaranController::class, 'destroy']);
+}); 
